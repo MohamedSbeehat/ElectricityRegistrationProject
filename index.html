@@ -1,35 +1,55 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>نموذج بيانات الكهرباء</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>نموذج بيانات المشترك</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>نموذج بيانات المشترك في شركة الكهرباء ⚡</h1>
-    <form id="dataForm">
-      <input type="text" id="name" placeholder="الاسم" required />
-      <input type="text" id="address" placeholder="العنوان" required />
-      <input type="date" id="date" required />
-      <textarea id="issue" placeholder="المشكلة" required></textarea>
-      <input type="text" id="subscription" placeholder="رقم الاشتراك" required />
-      <input type="text" id="meterNumber" placeholder="رقم العداد" required />
-      <select id="meterType" required>
-        <option value="" disabled selected>نوع العداد</option>
-        <option value="رقمي">فاز</option>
-        <option value="تقليدي">3 فاز</option>
-      </select>
-      <div class="buttons">
-        <button type="submit">💾 حفظ</button>
-        <button type="button" onclick="searchData()">🔍 بحث</button>
-      </div>
-    </form>
+    <div class="container">
+        <h1>نموذج إدخال بيانات المشترك</h1>
+        <form id="userForm" onsubmit="return false;">
+            <label for="name">الاسم:</label>
+            <input type="text" id="name" placeholder="أدخل الاسم" required />
 
-    <div id="result" class="result"></div>
-  </div>
+            <label for="address">العنوان:</label>
+            <input type="text" id="address" placeholder="أدخل العنوان" required />
 
-  <script src="script.js"></script>
+            <label for="date">التاريخ:</label>
+            <input type="date" id="date" required />
+
+            <label for="problem">المشكلة:</label>
+            <input type="text" id="problem" placeholder="أدخل المشكلة" />
+
+            <label for="subscription">رقم الاشتراك:</label>
+            <input type="text" id="subscription" placeholder="أدخل رقم الاشتراك" required />
+
+            <label for="meter">رقم العداد:</label>
+            <input type="text" id="meter" placeholder="أدخل رقم العداد" required />
+
+            <label for="meterType">نوع العداد:</label>
+            <select id="meterType" required>
+                <option value="">اختر نوع العداد</option>
+                <option value="فاز">فاز</option>
+                <option value="3 فاز">3 فاز</option>
+            </select>
+
+            <label for="visits">عدد الزيارات:</label>
+            <input type="number" id="visits" min="0" value="0" />
+
+         <div class="buttons">
+    <button type="button" onclick="saveUser()">💾 حفظ البيانات</button>
+    <button type="button" onclick="searchData()">🔍 بحث / عرض مشترك</button>
+    <button type="button" onclick="printBySubscription()">🖨️ طباعة بيانات مشترك</button>
+    <button type="button" onclick="exportUsers()">⬇️ تصدير البيانات</button>
+    <button type="button" onclick="downloadUsers()">📥 تحميل البيانات</button>
+    <button type="button" onclick="location.href='accounts.html'">➡️ الذهاب للحسابات</button>
+</div>
+
+        </form>
+        <div id="results"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

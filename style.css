@@ -1,68 +1,107 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-  color: #fff;
-  margin: 0;
-  padding: 0;
-  direction: rtl;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #001f3f, #007ea7);
+    color: #e0e0e0;
+    margin: 0;
+    padding: 20px;
+    direction: rtl;
 }
 
 .container {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #202b3f;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    max-width: 700px;
+    background: #012f4a;
+    padding: 25px 30px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 126, 167, 0.6);
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #f8e71c;
+h1, h2, h3 {
+    color: #00bfff;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-input, textarea, select, button {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  box-sizing: border-box;
+form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 16px;
 }
 
-input, textarea, select {
-  background-color: #e0e0e0;
-  color: #000;
+form input[type="text"],
+form input[type="number"],
+form input[type="date"],
+form select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: #023d66;
+    color: #e0e0e0;
 }
 
-textarea {
-  resize: vertical;
-}
-
-button {
-  background-color: #f8e71c;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-button:hover {
-  background-color: #ffe600;
+form select option {
+    color: black;
 }
 
 .buttons {
-  display: flex;
-  gap: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 
-.result {
-  background-color: #0d1117;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 20px;
-  white-space: pre-wrap;
-  word-break: break-word;
+.buttons button {
+    background: #00bfff;
+    color: #012f4a;
+    border: none;
+    padding: 12px 22px;
+    margin: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.buttons button:hover {
+    background: #0092d1;
+    color: #fff;
+}
+
+#results, #accountsResults {
+    margin-top: 25px;
+    background: #014972;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    color: #e0e0e0;
+}
+
+th, td {
+    border: 1px solid #00bfff;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #007ea7;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px 20px;
+    }
+    form label, form input, form select, .buttons button {
+        font-size: 14px;
+    }
 }
