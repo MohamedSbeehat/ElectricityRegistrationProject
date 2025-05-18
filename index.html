@@ -27,25 +27,38 @@
             <label for="meter">رقم العداد:</label>
             <input type="text" id="meter" placeholder="أدخل رقم العداد" required />
 
-            <label for="meterType">نوع العداد:</label>
+            <label for="meterType">عدد الأوجه:</label>
             <select id="meterType" required>
                 <option value="">اختر نوع العداد</option>
                 <option value="فاز">فاز</option>
                 <option value="3 فاز">3 فاز</option>
             </select>
 
+            <label for="meterBrand">ماركة العداد:</label>
+            <select id="meterBrand" required>
+                <option value="">اختر ماركة العداد</option>
+                <option value="هولي كرت">هولي كرت</option>
+                <option value="هولي سمارت">هولي سمارت</option>
+                <option value="لونجي">لونجي</option>
+                <option value="مصري">مصري</option>
+                <option value="تركي">تركي</option>
+                <option value="كنلوك">كنلوك</option>
+                <option value="انهي ميتر">انهي ميتر</option>
+            </select>
+
             <label for="visits">عدد الزيارات:</label>
             <input type="number" id="visits" min="0" value="0" />
 
-         <div class="buttons">
-    <button type="button" onclick="saveUser()">💾 حفظ البيانات</button>
-    <button type="button" onclick="searchData()">🔍 بحث / عرض مشترك</button>
-    <button type="button" onclick="printBySubscription()">🖨️ طباعة بيانات مشترك</button>
-    <button type="button" onclick="exportUsers()">⬇️ تصدير البيانات</button>
-    <button type="button" onclick="downloadUsers()">📥 تحميل البيانات</button>
-    <button type="button" onclick="location.href='accounts.html'">➡️ الذهاب للحسابات</button>
-</div>
-
+            <div class="buttons">
+                <button type="button" onclick="saveUser()">💾 حفظ البيانات</button>
+                <button type="button" onclick="searchData()">🔍 بحث / عرض مشترك</button>
+                <button type="button" onclick="printBySubscription()">🖨️ طباعة بيانات مشترك</button>
+                <button type="button" onclick="exportUsers()">⬇️ تصدير البيانات</button>
+                <button type="button" onclick="downloadUsers()">📥 تحميل البيانات</button>
+                <button type="button" onclick="showAllUsers()">📋 عرض جميع المستخدمين</button>      
+                <button onclick="editUser()">✏️ تعديل مشترك</button>
+                <button onclick="deleteUser()">🗑️ حذف مشترك</button> 
+            </div>
         </form>
         <div id="results"></div>
     </div>
