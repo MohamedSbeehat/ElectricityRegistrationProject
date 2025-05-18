@@ -235,3 +235,48 @@ function downloadUsers() {
 
     input.click();
 }
+function printBySubscription() {
+    const subscription = prompt("📌 أدخل رقم الاشتراك للطباعة:");
+    if (!subscription) return;
+
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(u => u.subscription === subscription);
+    if (!user) {
+        alert("❌ لم يتم العثور على مشترك بهذا الرقم.");
+        return;
+    }
+
+    // إنشاء نافذة جديدة للطباعة
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write(`
+        <html lang="ar" dir="rtl">
+        <head>
+            <title>طباعة بيانات المشترك</title>
+            <style>
+                body { font-family: Arial, sans-serif; direction: rtl; padding: 20px; }
+                h2 { text-align: center; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                td { padding: 8px; border: 1px solid #000; }
+            </style>
+        </head>
+        <body>
+            <h2>بيانات المشترك</h2>
+            <table>
+                <tr><td><strong>الاسم:</strong></td><td>${user.name}</td></tr>
+                <tr><td><strong>العنوان:</strong></td><td>${user.address}</td></tr>
+                <tr><td><strong>التاريخ:</strong></td><td>${user.date}</td></tr>
+                <tr><td><strong>المشكلة:</strong></td><td>${user.problem}</td></tr>
+                <tr><td><strong>رقم الاشتراك:</strong></td><td>${user.subscription}</td></tr>
+                <tr><td><strong>رقم العداد:</strong></td><td>${user.meter}</td></tr>
+                <tr><td><strong>عدد الأوجه:</strong></td><td>${user.meterType}</td></tr>
+                <tr><td><strong>ماركة العداد:</strong></td><td>${user.meterBrand}</td></tr>
+                <tr><td><strong>عدد الزيارات:</strong></td><td>${user.visits}</td></tr>
+            </table>
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}
