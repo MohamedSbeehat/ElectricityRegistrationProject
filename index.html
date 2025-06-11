@@ -1,68 +1,1217 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <title>نموذج بيانات المشترك</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المهام</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2edff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #1a2980, #26d0ce);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .app-description {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ecf0f1;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-left: 10px;
+            color: #3498db;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #3498db, #2c81ba);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, #2980b9, #256a9e);
+        }
+        
+        .btn-success {
+            background: linear-gradient(to right, #2ecc71, #27ad60);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(to right, #27ae60, #219653);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(to right, #c0392b, #a23526);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(to right, #f39c12, #d68910);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(to right, #d35400, #b84500);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #7f8c8d, #6c7a7a);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(to right, #34495e, #2c3e50);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        table th {
+            background: linear-gradient(to bottom, #3498db, #2980b9);
+            color: white;
+            font-weight: 600;
+            text-align: right;
+            padding: 15px;
+        }
+        
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        table tr:hover {
+            background-color: #f1f9ff;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-btn.edit {
+            background: #3498db;
+            color: white;
+        }
+        
+        .action-btn.delete {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: linear-gradient(to right, #2ecc71, #27ad60);
+        }
+        
+        .notification.error {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+        
+        .notification.info {
+            background: linear-gradient(to right, #3498db, #2980b9);
+        }
+        
+        .import-export {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-container input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3498db;
+            margin: 10px 0;
+        }
+        
+        .stat-card .label {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+        
+        .achievements-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .achievement-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+        
+        .achievement-card.completed {
+            border-left: 4px solid #2ecc71;
+            background: linear-gradient(to right, #ffffff, #f0fff4);
+        }
+        
+        .achievement-card.pending {
+            border-left: 4px solid #f39c12;
+            background: linear-gradient(to right, #ffffff, #fffaf0);
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .achievement-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .achievement-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .achievement-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+        
+        .achievement-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .achievement-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        
+        .achievement-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #3498db;
+            background: white;
+            color: #3498db;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .achievements-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>نموذج إدخال بيانات المشترك</h1>
-        <form id="userForm" onsubmit="return false;">
-            <label for="name">الاسم:</label>
-            <input type="text" id="name" placeholder="أدخل الاسم" required />
-
-            <label for="address">العنوان:</label>
-            <input type="text" id="address" placeholder="أدخل العنوان" required />
-
-            <label for="date">التاريخ:</label>
-            <input type="date" id="date" required />
-
-            <label for="problem">المشكلة:</label>
-            <input type="text" id="problem" placeholder="أدخل المشكلة" />
-
-            <label for="subscription">رقم الاشتراك:</label>
-            <input type="text" id="subscription" placeholder="أدخل رقم الاشتراك" required />
-
-            <label for="meter">رقم العداد:</label>
-            <input type="text" id="meter" placeholder="أدخل رقم العداد" required />
-
-            <label for="meterType">عدد الأوجه:</label>
-            <select id="meterType" required>
-                <option value="">اختر نوع العداد</option>
-                <option value="فاز">فاز</option>
-                <option value="3 فاز">3 فاز</option>
-            </select>
-
-            <label for="meterBrand">ماركة العداد:</label>
-            <select id="meterBrand" required>
-                <option value="">اختر ماركة العداد</option>
-                <option value="هولي كرت">هولي كرت</option>
-                <option value="هولي سمارت">هولي سمارت</option>
-                <option value="لونجي">لونجي</option>
-                <option value="مصري">مصري</option>
-                <option value="تركي">تركي</option>
-                <option value="كنلوك">كنلوك</option>
-                <option value="انهي ميتر">انهي ميتر</option>
-            </select>
-
-            <label for="visits">عدد الزيارات:</label>
-            <input type="number" id="visits" min="0" value="0" />
-
-            <div class="buttons">
-                <button type="button" onclick="saveUser()">💾 حفظ البيانات</button>
-                <button type="button" onclick="searchData()">🔍 بحث / عرض مشترك</button>
-                <button type="button" onclick="printBySubscription()">🖨️ طباعة بيانات مشترك</button>
-                <button type="button" onclick="exportUsers()">⬇️ تصدير البيانات</button>
-                <button type="button" onclick="downloadUsers()">📥 تحميل البيانات</button>
-                <button type="button" onclick="showAllUsers()">📋 عرض جميع المستخدمين</button>      
-                <button onclick="editUser()">✏️ تعديل مشترك</button>
-                <button onclick="deleteUser()">🗑️ حذف مشترك</button> 
+        <header>
+            <h1><i class="fas fa-bolt"></i> شركة كهرباء اليامون </h1>
+            <p class="app-description">
+                نظام متكامل لإدارة بيانات المشتركين مخصص (محمد هلال فريحات)
+            </p>
+        </header>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="label">عدد المشتركين</div>
+                <div class="number" id="total-subscribers">0</div>
             </div>
-        </form>
-        <div id="results"></div>
-    </div>
+           
+            <div class="stat-card">
+                <div class="label">المهام المحققة</div>
+                <div class="number" id="achieved-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">المهام المعلقة</div>
+                <div class="number" id="unachieved-count">0</div>
+            </div>
+        </div>
+        
+        <!-- قسم متابعة الإنجازات -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-trophy"></i> قسم المهام </h2>
+            
+            <div class="achievement-filter">
+                <button class="filter-btn active" data-filter="all">عرض الكل</button>
+                <button class="filter-btn" data-filter="completed"> المهام المحققة </button>
+                <button class="filter-btn" data-filter="pending">المهام المعلقة</button>
+            </div>
+            
+            <div class="achievements-section" id="achievements-container">
+                <!-- سيتم تعبئة الإنجازات ديناميكياً -->
+            </div>
+            
+            <h3 style="margin-top: 20px; color: #2c3e50;">إضافة مهمة جديد</h3>
+            <div class="form-grid">
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="new-achievement">عنوان المهمة</label>
+                    <input type="text" id="new-achievement" placeholder="أدخل عنوان المهمة هنا">
+                </div>
+                <div class="form-group">
+                    <label for="achievement-description">وصف المهمة (اختياري)</label>
+                    <textarea id="achievement-description" placeholder="أدخل وصف المهمة هنا"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="achievement-date">تاريخ المهمة المستهدف</label>
+                    <input type="date" id="achievement-date">
+                </div>
+            </div>
+            <button class="btn btn-primary" id="add-achievement-btn">
+                <i class="fas fa-plus"></i> إضافة مهمة جديد
+            </button>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-user-plus"></i> إدارة بيانات المشترك</h2>
+            <form id="subscriber-form">
+                <input type="hidden" id="subscriberId">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">اسم العميل</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">العنوان</label>
+                        <input type="text" id="address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="visitDate">تاريخ الزيارة</label>
+                        <input type="date" id="visitDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="problem">المشكلة</label>
+                        <textarea id="problem" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subscriptionNumber">رقم الاشتراك</label>
+                        <input type="text" id="subscriptionNumber" required>
+                    </div>
+                    
+                   <div class="form-group">
+    <label for="meterNumber">رقم العداد:</label>
+    <input type="text" id="meterNumber" placeholder="أدخل رقم العداد" required />
+</div>
 
-    <script src="script.js"></script>
+<div class="form-group">
+    <label for="meterType">عدد الأوجه:</label>
+    <select id="meterType" required>
+        <option value="">اختر نوع العداد</option>
+        <option value="فاز">فاز</option>
+        <option value="3 فاز">3 فاز</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="meterBrand">ماركة العداد:</label>
+    <select id="meterBrand" required>
+        <option value="">اختر ماركة العداد</option>
+        <option value="هولي كرت">هولي كرت</option>
+        <option value="هولي سمارت">هولي سمارت</option>
+        <option value="لونجي">لونجي</option>
+        <option value="مصري">مصري</option>
+        <option value="تركي">تركي</option>
+        <option value="كنلوك">كنلوك</option>
+        <option value="انهي ميتر">انهي ميتر</option>
+    </select>
+</div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> إضافة مشترك
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                        <i class="fas fa-undo"></i> إعادة تعيين
+                    </button>
+                    <button type="button" id="update-btn" class="btn btn-success" style="display: none;">
+                        <i class="fas fa-save"></i> تحديث البيانات
+                    </button>
+                    <button type="button" id="cancel-edit" class="btn btn-warning" style="display: none;">
+                        <i class="fas fa-times"></i> إلغاء التعديل
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-users"></i> قائمة المشتركين</h2>
+            
+            <div class="search-container">
+                
+                <select id="filter-meterBrand">
+    <option value="">كل الماركات</option>
+    <option value="هولي كرت">هولي كرت</option>
+    <option value="هولي سمارت">هولي سمارت</option>
+    <option value="لونجي">لونجي</option>
+    <option value="مصري">مصري</option>
+    <option value="تركي">تركي</option>
+    <option value="كنلوك">كنلوك</option>
+    <option value="انهي ميتر">انهي ميتر</option>
+</select>
+
+<select id="filter-meterType">
+    <option value="">كل الأنواع</option>
+    <option value="فاز">فاز</option>
+    <option value="3 فاز">3 فاز</option>
+</select>
+                
+                
+                <input type="text" id="search-input" placeholder="ابحث عن مشترك بالاسم أو رقم الاشتراك...">
+                <button class="btn btn-secondary" id="search-btn">
+                    <i class="fas fa-search"></i> بحث
+                </button>
+            </div>
+            
+            <div class="table-container">
+                <table id="subscriberTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>اسم العميل</th>
+                            <th>العنوان</th>
+                            <th>تاريخ الزيارة</th>
+                            <th>المشكلة</th>
+                            <th>رقم الاشتراك</th>
+                            <th>رقم العداد</th>
+                            <th>نوع العداد</th>
+                            <th>ماركة العداد</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- سيتم تعبئة البيانات ديناميكياً -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-database"></i> إدارة البيانات</h2>
+            
+            <div class="import-export">
+                <button class="btn btn-primary" id="export-btn">
+                    <i class="fas fa-file-export"></i> تصدير البيانات (JSON)
+                </button>
+                
+                <button class="btn btn-success" id="import-btn">
+                    <i class="fas fa-file-import"></i> استيراد البيانات (JSON)
+                </button>
+                
+                <button class="btn btn-danger" id="clear-btn">
+                    <i class="fas fa-trash-alt"></i> مسح جميع البيانات
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>شركة كهرباء اليامون </p>
+            <p>Designed by Mohaamed sbehat &copy; 2025</p>
+        </footer>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+    
+    <script>
+        // Initialize subscribers array from localStorage
+        let subscribers = JSON.parse(localStorage.getItem("subscribers")) || [];
+        let achievements = JSON.parse(localStorage.getItem("achievements")) || [];
+        
+        // DOM elements
+        const subscriberForm = document.getElementById("subscriber-form");
+        const subscriberTable = document.getElementById("subscriberTable");
+        const updateBtn = document.getElementById("update-btn");
+        const cancelEditBtn = document.getElementById("cancel-edit");
+        const achievementsContainer = document.getElementById("achievements-container");
+        
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+            updateStats();
+            renderAchievements();
+            
+            // Event listeners
+            subscriberForm.addEventListener('submit', handleSubmit);
+            updateBtn.addEventListener('click', updateSubscriber);
+            cancelEditBtn.addEventListener('click', cancelEdit);
+            document.getElementById('export-btn').addEventListener('click', exportData);
+            document.getElementById('import-btn').addEventListener('click', triggerImport);
+            document.getElementById('clear-btn').addEventListener('click', clearAllData);
+            document.getElementById('search-btn').addEventListener('click', searchSubscribers);
+            document.getElementById('search-input').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') searchSubscribers();
+            });
+            
+            // Achievement event listeners
+            document.getElementById('add-achievement-btn').addEventListener('click', addAchievement);
+            
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    renderAchievements(this.dataset.filter);
+                });
+            });
+        });
+        
+        // Handle form submit (add new subscriber)
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById("subscriberId").value || generateId();
+            const subscriber = {
+                id: Number(id),
+                name: document.getElementById("name").value,
+                address: document.getElementById("address").value,
+                visitDate: document.getElementById("visitDate").value,
+                problem: document.getElementById("problem").value,
+                subscriptionNumber: document.getElementById("subscriptionNumber").value,
+                meterNumber: document.getElementById("meterNumber").value,
+                meterType: document.getElementById("meterType").value,
+                meterBrand: document.getElementById("meterBrand").value
+            };
+            
+            const index = subscribers.findIndex(s => s.id === Number(id));
+            if (index >= 0) {
+                subscribers[index] = subscriber;
+                showNotification('تم تحديث بيانات المشترك بنجاح', 'success');
+            } else {
+                subscribers.push(subscriber);
+                showNotification('تم إضافة مشترك جديد بنجاح', 'success');
+            }
+            
+            saveToStorage();
+            renderTable();
+            updateStats();
+            subscriberForm.reset();
+            document.getElementById("subscriberId").value = "";
+            
+            // Hide update buttons if visible
+            updateBtn.style.display = 'none';
+            cancelEditBtn.style.display = 'none';
+            document.querySelector('button[type="submit"]').style.display = 'inline-block';
+        }
+        
+        // Generate unique ID
+        function generateId() {
+            return Date.now();
+        }
+        
+        // Save to localStorage
+        function saveToStorage() {
+            localStorage.setItem("subscribers", JSON.stringify(subscribers));
+            localStorage.setItem("achievements", JSON.stringify(achievements));
+        }
+        
+        // Render subscribers table
+        function renderTable() {
+            const tbody = subscriberTable.querySelector("tbody");
+            tbody.innerHTML = "";
+            
+            if (subscribers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">لا توجد بيانات متاحة</td></tr>';
+                return;
+            }
+            
+            subscribers.forEach(sub => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${sub.id}</td>
+                    <td>${sub.name}</td>
+                    <td>${sub.address}</td>
+                    <td>${sub.visitDate}</td>
+                    <td>${sub.problem}</td>
+                    <td>${sub.subscriptionNumber}</td>
+                    <td>${sub.meterNumber}</td>
+                    <td>${sub.meterType}</td>
+                    <td>${sub.meterBrand}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit" onclick="editSubscriber(${sub.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="action-btn delete" onclick="deleteSubscriber(${sub.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Edit subscriber
+        function editSubscriber(id) {
+            const subscriber = subscribers.find(s => s.id === id);
+            if (!subscriber) return;
+            
+            document.getElementById("subscriberId").value = subscriber.id;
+            document.getElementById("name").value = subscriber.name;
+            document.getElementById("address").value = subscriber.address;
+            document.getElementById("visitDate").value = subscriber.visitDate;
+            document.getElementById("problem").value = subscriber.problem;
+            document.getElementById("subscriptionNumber").value = subscriber.subscriptionNumber;
+            document.getElementById("meterNumber").value = subscriber.meterNumber;
+            document.getElementById("meterType").value = subscriber.meterType;
+            document.getElementById("meterBrand").value = subscriber.meterBrand;
+            
+            // Show update buttons
+            updateBtn.style.display = 'inline-block';
+            cancelEditBtn.style.display = 'inline-block';
+            document.querySelector('button[type="submit"]').style.display = 'none';
+            
+            // Scroll to form
+            document.querySelector('.card-title').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Update subscriber
+        function updateSubscriber() {
+            subscriberForm.dispatchEvent(new Event('submit'));
+        }
+        
+        // Cancel edit
+        function cancelEdit() {
+            subscriberForm.reset();
+            document.getElementById("subscriberId").value = "";
+            
+            // Hide update buttons
+            updateBtn.style.display = 'none';
+            cancelEditBtn.style.display = 'none';
+            document.querySelector('button[type="submit"]').style.display = 'inline-block';
+        }
+        
+        // Delete subscriber
+        function deleteSubscriber(id) {
+            if (confirm("هل أنت متأكد من رغبتك في حذف هذا المشترك؟")) {
+                subscribers = subscribers.filter(s => s.id !== id);
+                saveToStorage();
+                renderTable();
+                updateStats();
+                showNotification('تم حذف المشترك بنجاح', 'success');
+            }
+        }
+        
+        // Export data to JSON
+        function exportData() {
+            const data = {
+                subscribers: subscribers,
+                achievements: achievements
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "subscribers_data.json";
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('تم تصدير البيانات بنجاح', 'success');
+        }
+        
+        // Trigger import
+        function triggerImport() {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "application/json";
+            
+            input.onchange = e => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.readAsText(file, "UTF-8");
+                
+                reader.onload = readerEvent => {
+                    const content = readerEvent.target.result;
+                    try {
+                        const data = JSON.parse(content);
+                        if (data.subscribers && data.achievements) {
+                            subscribers = data.subscribers;
+                            achievements = data.achievements;
+                            saveToStorage();
+                            renderTable();
+                            renderAchievements();
+                            updateStats();
+                            showNotification('تم استيراد البيانات بنجاح', 'success');
+                        } else {
+                            showNotification('الملف غير صالح', 'error');
+                        }
+                    } catch (err) {
+                        showNotification('فشل في قراءة الملف', 'error');
+                    }
+                };
+            };
+            
+            input.click();
+        }
+        
+        // Clear all data
+        function clearAllData() {
+            if (confirm('هل أنت متأكد من رغبتك في مسح جميع البيانات؟ سيتم فقدان جميع السجلات بشكل دائم.')) {
+                subscribers = [];
+                achievements = [];
+                saveToStorage();
+                renderTable();
+                renderAchievements();
+                updateStats();
+                showNotification('تم مسح جميع البيانات بنجاح', 'success');
+            }
+        }
+        
+        // Search subscribers
+ function searchSubscribers() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const selectedBrand = document.getElementById('filter-meterBrand').value;
+    const selectedType = document.getElementById('filter-meterType').value;
+
+    let filtered = subscribers.filter(sub =>
+        (sub.name.toLowerCase().includes(searchTerm) || 
+         sub.subscriptionNumber.toLowerCase().includes(searchTerm)) &&
+        (selectedBrand === "" || sub.meterBrand === selectedBrand) &&
+        (selectedType === "" || sub.meterType === selectedType)
+    );
+
+    const tbody = subscriberTable.querySelector("tbody");
+    tbody.innerHTML = "";
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">لا توجد نتائج بحث</td></tr>';
+        return;
+    }
+
+    filtered.forEach(sub => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${sub.id}</td>
+            <td>${sub.name}</td>
+            <td>${sub.address}</td>
+            <td>${sub.visitDate}</td>
+            <td>${sub.problem}</td>
+            <td>${sub.subscriptionNumber}</td>
+            <td>${sub.meterNumber}</td>
+            <td>${sub.meterType}</td>
+            <td>${sub.meterBrand}</td>
+            <td>
+                <div class="action-buttons">
+                    <button class="action-btn edit" onclick="editSubscriber(${sub.id})">
+                        <i class="fas fa-edit"></i> تعديل
+                    </button>
+                    <button class="action-btn delete" onclick="deleteSubscriber(${sub.id})">
+                        <i class="fas fa-trash"></i> حذف
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+        
+        // Update statistics
+        function updateStats() {
+            document.getElementById('total-subscribers').textContent = subscribers.length;
+            document.getElementById('pending-issues').textContent = subscribers.length;
+            
+            // Achievement counts
+            const achievedCount = achievements.filter(a => a.completed).length;
+            const unachievedCount = achievements.filter(a => !a.completed).length;
+            
+            document.getElementById('achieved-count').textContent = achievedCount;
+            document.getElementById('unachieved-count').textContent = unachievedCount;
+        }
+        
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+    // تأكد من أن زر إضافة المهمة مرتبط
+    const addAchievementBtn = document.getElementById('add-achievement-btn');
+    if (addAchievementBtn) {
+        addAchievementBtn.addEventListener('click', addAchievement);
+    }
+
+    renderTable();
+    updateStats();
+    renderAchievements();
+    
+    subscriberForm.addEventListener('submit', handleSubmit);
+    updateBtn.addEventListener('click', updateSubscriber);
+    cancelEditBtn.addEventListener('click', cancelEdit);
+    
+    document.getElementById('export-btn').addEventListener('click', exportData);
+    document.getElementById('import-btn').addEventListener('click', triggerImport);
+    document.getElementById('clear-btn').addEventListener('click', clearAllData);
+    document.getElementById('search-btn').addEventListener('click', searchSubscribers);
+    document.getElementById('search-input').addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') searchSubscribers();
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            renderAchievements(this.dataset.filter);
+        });
+    });
+});
+
+        
+        // Add new achievement
+        function addAchievement() {
+            const titleInput = document.getElementById('new-achievement');
+            const descriptionInput = document.getElementById('achievement-description');
+            const dateInput = document.getElementById('achievement-date');
+            
+            const title = titleInput.value.trim();
+            if (!title) {
+                showNotification('يرجى إدخال عنوان للإنجاز', 'error');
+                return;
+            }
+            
+            const achievement = {
+                id: Date.now(),
+                title: title,
+                description: descriptionInput.value.trim(),
+                date: dateInput.value || new Date().toISOString().split('T')[0],
+                completed: false
+            };
+            
+            achievements.push(achievement);
+            saveToStorage();
+            renderAchievements();
+            updateStats();
+            
+            titleInput.value = '';
+            descriptionInput.value = '';
+            dateInput.value = '';
+            
+            showNotification('تمت إضافة الإنجاز بنجاح', 'success');
+        }
+        
+        // Toggle achievement status
+        function toggleAchievement(id) {
+            const achievement = achievements.find(a => a.id === id);
+            if (achievement) {
+                achievement.completed = !achievement.completed;
+                saveToStorage();
+                renderAchievements();
+                updateStats();
+                
+                const status = achievement.completed ? 'محققة' : 'غير محققة';
+                showNotification(`تم تحديث حالة الإنجاز إلى ${status}`, 'success');
+            }
+        }
+        window.toggleAchievement = toggleAchievement;
+
+        
+        // Delete achievement
+        function deleteAchievement(id) {
+            if (confirm('هل أنت متأكد من رغبتك في حذف هذا الإنجاز؟')) {
+                achievements = achievements.filter(a => a.id !== id);
+                saveToStorage();
+                renderAchievements();
+                updateStats();
+                showNotification('تم حذف الإنجاز بنجاح', 'success');
+            }
+        }
+        window.deleteAchievement = deleteAchievement;
+
+        // Render achievements
+        function renderAchievements(filter = 'all') {
+            achievementsContainer.innerHTML = '';
+            
+            if (achievements.length === 0) {
+                achievementsContainer.innerHTML = `
+                    <div class="achievement-card" style="grid-column: 1 / -1; text-align: center;">
+                        <p>لا توجد إنجازات مسجلة بعد. قم بإضافة إنجاز جديد.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let filteredAchievements = achievements;
+            
+            if (filter === 'completed') {
+                filteredAchievements = achievements.filter(a => a.completed);
+            } else if (filter === 'pending') {
+                filteredAchievements = achievements.filter(a => !a.completed);
+            }
+            
+            if (filteredAchievements.length === 0) {
+                const statusText = filter === 'completed' ? 'محققة' : 
+                                  filter === 'pending' ? 'متبقية' : '';
+                achievementsContainer.innerHTML = `
+                    <div class="achievement-card" style="grid-column: 1 / -1; text-align: center;">
+                        <p>لا توجد إنجازات ${statusText}.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredAchievements.forEach(achievement => {
+                const achievementCard = document.createElement('div');
+                achievementCard.className = `achievement-card ${achievement.completed ? 'completed' : 'pending'}`;
+                
+                achievementCard.innerHTML = `
+                    <div class="achievement-header">
+                        <div class="achievement-title">${achievement.title}</div>
+                        <input type="checkbox" class="achievement-checkbox" 
+                            ${achievement.completed ? 'checked' : ''}
+                            onchange="toggleAchievement(${achievement.id})">
+                    </div>
+                    ${achievement.description ? `<div class="achievement-description">${achievement.description}</div>` : ''}
+                    <div class="achievement-date">
+                        <i class="fas fa-calendar"></i> ${achievement.date}
+                    </div>
+                    <div style="text-align: left; margin-top: 15px;">
+                        <button class="btn btn-danger" style="padding: 5px 10px; font-size: 14px;" 
+                            onclick="deleteAchievement(${achievement.id})">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>
+                    </div>
+                `;
+                
+                achievementsContainer.appendChild(achievementCard);
+            });
+        }
+        
+        // Initialize with sample achievements
+        function initializeSampleAchievements() {
+            if (achievements.length === 0) {
+                achievements = [
+                    {
+                        id: 1,
+                        title: "استبدال 50 عداد كهرباء",
+                        description: "استبدال العدادات القديمة بأخرى جديدة ذكية",
+                        date: "2023-11-15",
+                        completed: true
+                    },
+                    {
+                        id: 2,
+                        title: "تركيب أجهزة مراقبة الجودة",
+                        description: "تركيب أجهزة لمراقبة جودة الكهرباء في المناطق الرئيسية",
+                        date: "2023-12-01",
+                        completed: false
+                    },
+                    {
+                        id: 3,
+                        title: "زيادة عدد المشتركين بنسبة 10%",
+                        description: "زيادة قاعدة المشتركين خلال الربع الحالي",
+                        date: "2023-12-31",
+                        completed: false
+                    },
+                    {
+                        id: 4,
+                        title: "تدريب الفريق الفني",
+                        description: "إجراء دورة تدريبية للفريق الفني على التقنيات الحديثة",
+                        date: "2023-10-30",
+                        completed: true
+                    }
+                ];
+                saveToStorage();
+                renderAchievements();
+                updateStats();
+            }
+        }
+        
+        // Initialize with sample data
+        function initializeSampleData() {
+            if (subscribers.length === 0) {
+                subscribers = [
+                    {
+                        id: generateId(),
+                        name: "محمد أحمد",
+                        address: "شارع الملك فيصل، الرياض",
+                        visitDate: "2023-10-15",
+                        problem: "انقطاع متكرر للتيار الكهربائي",
+                        subscriptionNumber: "SUB-001",
+                        meterNumber: "MTR-001",
+                        meterType: "عداد كهرباء",
+                        meterBrand: "سيمنس"
+                    },
+                    {
+                        id: generateId(),
+                        name: "علي حسن",
+                        address: "حي النخيل، جدة",
+                        visitDate: "2023-10-20",
+                        problem: "عداد لا يعمل بشكل صحيح",
+                        subscriptionNumber: "SUB-002",
+                        meterNumber: "MTR-002",
+                        meterType: "عداد مياه",
+                        meterBrand: "سامسونج"
+                    }
+                ];
+                saveToStorage();
+                renderTable();
+                updateStats();
+            }
+            
+            initializeSampleAchievements();
+        }
+        
+        // Initialize sample data on first load
+        initializeSampleData();
+    </script>
 </body>
 </html>
