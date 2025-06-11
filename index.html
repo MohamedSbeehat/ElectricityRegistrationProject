@@ -680,9 +680,10 @@
         
         // Initialize application
         document.addEventListener('DOMContentLoaded', function() {
+            initializeSampleData();
             renderTable();
-            updateStats();
             renderAchievements();
+            updateStats();
             
             // Event listeners
             subscriberForm.addEventListener('submit', handleSubmit);
@@ -914,57 +915,56 @@
         }
         
         // Search subscribers
- function searchSubscribers() {
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
-    const selectedBrand = document.getElementById('filter-meterBrand').value;
-    const selectedType = document.getElementById('filter-meterType').value;
+        function searchSubscribers() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const selectedBrand = document.getElementById('filter-meterBrand').value;
+            const selectedType = document.getElementById('filter-meterType').value;
 
-    let filtered = subscribers.filter(sub =>
-        (sub.name.toLowerCase().includes(searchTerm) || 
-         sub.subscriptionNumber.toLowerCase().includes(searchTerm)) &&
-        (selectedBrand === "" || sub.meterBrand === selectedBrand) &&
-        (selectedType === "" || sub.meterType === selectedType)
-    );
+            let filtered = subscribers.filter(sub =>
+                (sub.name.toLowerCase().includes(searchTerm) || 
+                 sub.subscriptionNumber.toLowerCase().includes(searchTerm)) &&
+                (selectedBrand === "" || sub.meterBrand === selectedBrand) &&
+                (selectedType === "" || sub.meterType === selectedType)
+            );
 
-    const tbody = subscriberTable.querySelector("tbody");
-    tbody.innerHTML = "";
+            const tbody = subscriberTable.querySelector("tbody");
+            tbody.innerHTML = "";
 
-    if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">لا توجد نتائج بحث</td></tr>';
-        return;
-    }
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">لا توجد نتائج بحث</td></tr>';
+                return;
+            }
 
-    filtered.forEach(sub => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${sub.id}</td>
-            <td>${sub.name}</td>
-            <td>${sub.address}</td>
-            <td>${sub.visitDate}</td>
-            <td>${sub.problem}</td>
-            <td>${sub.subscriptionNumber}</td>
-            <td>${sub.meterNumber}</td>
-            <td>${sub.meterType}</td>
-            <td>${sub.meterBrand}</td>
-            <td>
-                <div class="action-buttons">
-                    <button class="action-btn edit" onclick="editSubscriber(${sub.id})">
-                        <i class="fas fa-edit"></i> تعديل
-                    </button>
-                    <button class="action-btn delete" onclick="deleteSubscriber(${sub.id})">
-                        <i class="fas fa-trash"></i> حذف
-                    </button>
-                </div>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
-}
+            filtered.forEach(sub => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${sub.id}</td>
+                    <td>${sub.name}</td>
+                    <td>${sub.address}</td>
+                    <td>${sub.visitDate}</td>
+                    <td>${sub.problem}</td>
+                    <td>${sub.subscriptionNumber}</td>
+                    <td>${sub.meterNumber}</td>
+                    <td>${sub.meterType}</td>
+                    <td>${sub.meterBrand}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit" onclick="editSubscriber(${sub.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="action-btn delete" onclick="deleteSubscriber(${sub.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
         
         // Update statistics
         function updateStats() {
             document.getElementById('total-subscribers').textContent = subscribers.length;
-            document.getElementById('pending-issues').textContent = subscribers.length;
             
             // Achievement counts
             const achievedCount = achievements.filter(a => a.completed).length;
@@ -984,38 +984,6 @@
                 notification.classList.remove('show');
             }, 3000);
         }
-        document.addEventListener('DOMContentLoaded', function() {
-    // تأكد من أن زر إضافة المهمة مرتبط
-    const addAchievementBtn = document.getElementById('add-achievement-btn');
-    if (addAchievementBtn) {
-        addAchievementBtn.addEventListener('click', addAchievement);
-    }
-
-    renderTable();
-    updateStats();
-    renderAchievements();
-    
-    subscriberForm.addEventListener('submit', handleSubmit);
-    updateBtn.addEventListener('click', updateSubscriber);
-    cancelEditBtn.addEventListener('click', cancelEdit);
-    
-    document.getElementById('export-btn').addEventListener('click', exportData);
-    document.getElementById('import-btn').addEventListener('click', triggerImport);
-    document.getElementById('clear-btn').addEventListener('click', clearAllData);
-    document.getElementById('search-btn').addEventListener('click', searchSubscribers);
-    document.getElementById('search-input').addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') searchSubscribers();
-    });
-
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            renderAchievements(this.dataset.filter);
-        });
-    });
-});
-
         
         // Add new achievement
         function addAchievement() {
@@ -1062,8 +1030,6 @@
                 showNotification(`تم تحديث حالة الإنجاز إلى ${status}`, 'success');
             }
         }
-        window.toggleAchievement = toggleAchievement;
-
         
         // Delete achievement
         function deleteAchievement(id) {
@@ -1075,8 +1041,7 @@
                 showNotification('تم حذف الإنجاز بنجاح', 'success');
             }
         }
-        window.deleteAchievement = deleteAchievement;
-
+        
         // Render achievements
         function renderAchievements(filter = 'all') {
             achievementsContainer.innerHTML = '';
@@ -1136,8 +1101,35 @@
             });
         }
         
-        // Initialize with sample achievements
-        function initializeSampleAchievements() {
+        // Initialize with sample data
+        function initializeSampleData() {
+            if (subscribers.length === 0) {
+                subscribers = [
+                    {
+                        id: generateId(),
+                        name: "محمد أحمد",
+                        address: "شارع الملك فيصل، الرياض",
+                        visitDate: "2023-10-15",
+                        problem: "انقطاع متكرر للتيار الكهربائي",
+                        subscriptionNumber: "SUB-001",
+                        meterNumber: "MTR-001",
+                        meterType: "فاز",
+                        meterBrand: "هولي كرت"
+                    },
+                    {
+                        id: generateId(),
+                        name: "علي حسن",
+                        address: "حي النخيل، جدة",
+                        visitDate: "2023-10-20",
+                        problem: "عداد لا يعمل بشكل صحيح",
+                        subscriptionNumber: "SUB-002",
+                        meterNumber: "MTR-002",
+                        meterType: "3 فاز",
+                        meterBrand: "لونجي"
+                    }
+                ];
+            }
+            
             if (achievements.length === 0) {
                 achievements = [
                     {
@@ -1169,49 +1161,16 @@
                         completed: true
                     }
                 ];
-                saveToStorage();
-                renderAchievements();
-                updateStats();
-            }
-        }
-        
-        // Initialize with sample data
-        function initializeSampleData() {
-            if (subscribers.length === 0) {
-                subscribers = [
-                    {
-                        id: generateId(),
-                        name: "محمد أحمد",
-                        address: "شارع الملك فيصل، الرياض",
-                        visitDate: "2023-10-15",
-                        problem: "انقطاع متكرر للتيار الكهربائي",
-                        subscriptionNumber: "SUB-001",
-                        meterNumber: "MTR-001",
-                        meterType: "عداد كهرباء",
-                        meterBrand: "سيمنس"
-                    },
-                    {
-                        id: generateId(),
-                        name: "علي حسن",
-                        address: "حي النخيل، جدة",
-                        visitDate: "2023-10-20",
-                        problem: "عداد لا يعمل بشكل صحيح",
-                        subscriptionNumber: "SUB-002",
-                        meterNumber: "MTR-002",
-                        meterType: "عداد مياه",
-                        meterBrand: "سامسونج"
-                    }
-                ];
-                saveToStorage();
-                renderTable();
-                updateStats();
             }
             
-            initializeSampleAchievements();
+            saveToStorage();
         }
         
-        // Initialize sample data on first load
-        initializeSampleData();
+        // Make functions available globally
+        window.toggleAchievement = toggleAchievement;
+        window.deleteAchievement = deleteAchievement;
+        window.editSubscriber = editSubscriber;
+        window.deleteSubscriber = deleteSubscriber;
     </script>
 </body>
 </html>
